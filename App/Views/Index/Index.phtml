@@ -1,0 +1,52 @@
+<div class="d-flex">
+    <div class="flex-fill">
+        <h1 class="h2 mb-3">Список задач</h1>
+    </div>
+    <div class="mb-3">
+        <a class="btn btn-primary <?php if(!$this->user) echo 'disabled'; ?>" href="/compose/">Создать задачу</a>
+    </div>
+</div>
+
+<div class="bg-light p-3 mb-3">
+    <h5 class="text-info mb-3">Сортировка</h5>
+
+    <form class="row g-3" method="GET">
+        <div class="col-auto">
+            <?php $this->render('Partial/Select', ['form' => $this->form, 'name' => 'order']); ?>
+        </div>
+        <div class="col-auto">
+            <?php $this->render('Partial/Select', ['form' => $this->form, 'name' => 'sort']); ?>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Искать</button>
+        </div>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th width="60px">#</th>
+            <th width="150px">Статус</th>
+            <th width="150px">Имя</th>
+            <th width="200px">Email</th>
+            <th>Описание</th>
+            <th width="150px">Действия</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php /** @var \App\Models\Task $task */ foreach($this->tasks as $task): ?>
+            <tr>
+                <th><?=$task->id;?></th>
+                <th><?php if($task->status === 0): ?><span class="badge bg-danger">Не выполнено</span><?php else: ?><span class="badge bg-success">Выполнено</span><?php endif; ?></th>
+                <td><?=$task->name;?></td>
+                <td><?=$task->email;?></td>
+                <td><?=$task->content;?></td>
+                <td><?php if($this->user): ?><a href="/compose/<?=$task->id;?>">Редактировать</a><?php endif; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<?php $this->render('Partial/Paginator', ['paginator' => $this->tasks, 'limits' => [3, 5, 10, 25]]); ?>

@@ -1,0 +1,21 @@
+<?php $current = max(1, $paginator->page - 4); ?>
+<div class="row">
+    <div class="col-md-6 mb-2">
+        По <select class="form-select d-inline-block" oninput="location.href = this.value;" style="width: auto;">
+            <?php foreach(($limits ?? [10, 25, 50, 100]) as $limit): ?>
+                <option value="<?=$paginator->getUrlLimit($limit);?>"<?php if($paginator->limit === $limit) echo ' selected'; ?>><?=$limit;?></option>
+            <?php endforeach; ?>
+        </select> на страницу.
+    </div>
+
+    <div class="col-md-6 mb-2">
+        <?php if($paginator->pages > 1): ?>
+            <ul class="pagination float-md-end">
+                <?php for($i = 0; $i < 7; $i++): ?>
+                    <?php if($current > $paginator->pages) break; ?>
+                    <li class="page-item<?php if($current === $paginator->page) echo ' active'; ?>"><a class="page-link" href="<?=$paginator->getUrlPage($current);?>"><?=$current++;?></a></li>
+                <?php endfor; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+<?php /* @var \App\Engine\Html\Form $form *//* @var string $name */ ?>
+<?php $class = $form->processed ? ($form->errors[$name] ? ' is-invalid' : ' is-valid') : ''; ?>
+<?php $form->$name->render(array_merge(['class' => 'form-control' . $class], $attrs ?? [])); ?>
+<div class="invalid-feedback"><?=($form->errors[$name] ?? '');?></div>

@@ -1,0 +1,23 @@
+<form method="POST" class="bg-light rounded mx-auto p-3" style="width: 640px;">
+    <div class="mb-4">
+        <label class="form-label">Статус задачи:</label>
+        <?php $this->render('Partial/Select', ['form' => $this->form, 'name' => 'status']); ?>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Введите имя:</label>
+        <?php $this->render('Partial/Input', ['form' => $this->form, 'name' => 'name']); ?>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Введите почту:</label>
+        <?php $this->render('Partial/Input', ['form' => $this->form, 'name' => 'email']); ?>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Введите описание:</label>
+        <?php $this->render('Partial/Input', ['form' => $this->form, 'name' => 'content']); ?>
+    </div>
+
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>

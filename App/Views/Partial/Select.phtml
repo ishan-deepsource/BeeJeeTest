@@ -1,0 +1,3 @@
+<?php $class = $form->processed ? ($form->errors[$name] ? ' is-invalid' : ' is-valid') : ''; ?>
+<?php $form->render($name, array_merge(['class' => 'form-select' . $class], $attrs ?? [])); ?>
+<div class="invalid-feedback"><?=($form->errors[$name] ?? '');?></div>

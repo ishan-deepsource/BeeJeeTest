@@ -1,0 +1,13 @@
+<form method="POST" class="bg-light rounded mx-auto p-3" style="width: 640px;">
+    <div class="mb-4">
+        <label class="form-label">Введите логин:</label>
+        <?php $this->render('Partial/Input', ['form' => $this->form, 'name' => 'username']); ?>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Введите пароль:</label>
+        <?php $this->render('Partial/Input', ['form' => $this->form, 'name' => 'password']); ?>
+    </div>
+
+    <button type="submit" class="btn btn-success">Войти</button>
+</form>
