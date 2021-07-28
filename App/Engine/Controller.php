@@ -6,14 +6,11 @@ namespace App\Engine;
 
 class Controller
 {
+    public static self $instance;
     public string $controller;
     public string $action;
-
     public Request $request;
     public Response $response;
-
-    public static self $instance;
-
     private array $services = [];
 
     public function __construct()
@@ -24,6 +21,29 @@ class Controller
         self::$instance = $this;
     }
 
+    public static function run(string $uri, string $method): static
+    {
+        $route = \App\Engine\Router::direct(
+            require('routes.php'),
+            strstr("{$uri}?", '?', true),
+            $method
+        );
+
+        $class = "\App\Controllers\\{$route[0]}Controller";
+        $action = "{$route[1]}Action";
+
+        $controller = new $class();
+        $controller->services = require('loader.php');
+        $controller->controller = $route[0];
+        $controller->action = $route[1];
+
+        $controller->initialize() ??
+        $controller->$action(...$route[2]);
+        $controller->finalize();
+
+        return $controller;
+    }
+
     public function __isset($name)
     {
         return isset($services[$name]);
@@ -31,8 +51,7 @@ class Controller
 
     public function __get($name)
     {
-        if (!isset($this->services[$name]))
-        {
+        if (!isset($this->services[$name])) {
             throw new \Exception("Not found: {$name}");
         }
 
@@ -47,28 +66,5 @@ class Controller
 
     public function finalize()
     {
-    }
-
-    public static function run(string $uri, string $method):static
-    {
-        $route = \App\Engine\Router::direct(
-            require('routes.php'),
-            strstr("{$uri}?", '?', true),
-            $method
-        );
-
-        $class      = "\App\Controllers\\{$route[0]}Controller";
-        $action     = "{$route[1]}Action";
-
-        $controller = new $class();
-        $controller->services   = require('loader.php');
-        $controller->controller = $route[0];
-        $controller->action     = $route[1];
-
-        $controller->initialize() ??
-        $controller->$action(...$route[2]);
-        $controller->finalize();
-
-        return $controller;
     }
 }

@@ -6,7 +6,8 @@ namespace App\Engine;
 
 class Router
 {
-    public static function direct(array $routes, string $uri, string $method = 'GET'):array {
+    public static function direct(array $routes, string $uri, string $method = 'GET'): array
+    {
 
         foreach ($routes as $route => $target) {
             if (isset($target[2]) and !in_array($method, $target[2], true)) continue;

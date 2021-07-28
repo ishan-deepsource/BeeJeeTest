@@ -3,7 +3,7 @@
         <h1 class="h2 mb-3">Список задач</h1>
     </div>
     <div class="mb-3">
-        <a class="btn btn-primary <?php if(!$this->user) echo 'disabled'; ?>" href="/compose/">Создать задачу</a>
+        <a class="btn btn-primary <?php if (!$this->user) echo 'disabled'; ?>" href="/compose/">Создать задачу</a>
     </div>
 </div>
 
@@ -25,27 +25,33 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th width="60px">#</th>
-            <th width="150px">Статус</th>
-            <th width="150px">Имя</th>
-            <th width="200px">Email</th>
-            <th>Описание</th>
-            <th width="150px">Действия</th>
-        </tr>
+    <tr>
+        <th width="60px">#</th>
+        <th width="250px">Статус</th>
+        <th width="150px">Имя</th>
+        <th width="200px">Email</th>
+        <th>Описание</th>
+        <th width="150px">Действия</th>
+    </tr>
     </thead>
 
     <tbody>
-        <?php /** @var \App\Models\Task $task */ foreach($this->tasks as $task): ?>
-            <tr>
-                <th><?=$task->id;?></th>
-                <th><?php if($task->status === 0): ?><span class="badge bg-danger">Не выполнено</span><?php else: ?><span class="badge bg-success">Выполнено</span><?php endif; ?></th>
-                <td><?=$task->name;?></td>
-                <td><?=$task->email;?></td>
-                <td><?=$task->content;?></td>
-                <td><?php if($this->user): ?><a href="/compose/<?=$task->id;?>">Редактировать</a><?php endif; ?></td>
-            </tr>
-        <?php endforeach; ?>
+    <?php /** @var \App\Models\Task $task */
+    foreach ($this->tasks as $task): ?>
+        <tr>
+            <th><?=$task->id;?></th>
+            <td>
+                <?php if ($task->status === 0): ?><span class="badge bg-danger">Не выполнено</span><?php else: ?><span
+                        class="badge bg-success">Выполнено</span><?php endif; ?>
+                <?php if ($task->date_creating !== $task->date_updating): ?><span
+                        class="text-muted">Отредактировано</span><?php endif; ?>
+            </td>
+            <td><?=$task->name;?></td>
+            <td><?=$task->email;?></td>
+            <td><?=$task->content;?></td>
+            <td><?php if ($this->user): ?><a href="/compose/<?=$task->id;?>">Редактировать</a><?php endif; ?></td>
+        </tr>
+    <?php endforeach; ?>
     </tbody>
 </table>
 

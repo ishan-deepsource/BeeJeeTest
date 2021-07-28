@@ -13,19 +13,17 @@ class IndexController extends BaseController
     public function indexAction()
     {
         $filterForm = new FilterForm();
+        $filterOrder = ['id' => 'DESC'];
 
-
-        if (isset($_GET['order']) and isset($_GET['sort']))
-        {
-            if ($filterForm->process($_GET))
-            {
-                // ???
+        if (isset($_GET['order']) and isset($_GET['sort'])) {
+            if ($filterForm->process($_GET)) {
+                $filterOrder = [$filterForm->order->getValue() => $filterForm->sort->getValue()];
             }
         }
 
         $this->view->tasks = new Pagination(
             class: Task::class,
-            order: [$filterForm->order->getValue() => $filterForm->sort->getValue()],
+            order: $filterOrder,
             limit: 3
         );
         $this->view->form = $filterForm;

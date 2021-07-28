@@ -14,10 +14,8 @@ class UserController extends BaseController
     {
         $loginForm = new LoginForm();
 
-        if ($this->request->isPost())
-        {
-            if ($loginForm->process($_POST))
-            {
+        if ($this->request->isPost()) {
+            if ($loginForm->process($_POST)) {
                 $in_username = $loginForm->get('username');
                 $in_password = $loginForm->get('password');
                 $in_password = User::hashPassword($in_password);
@@ -30,19 +28,16 @@ class UserController extends BaseController
                     ]
                 );
 
-                if (!$incomer)
-                {
-                    $loginForm->setError('username', 'Связка логин/пароль не найдена!');
-                }
-                else
-                {
+                if (!$incomer) {
+                    $this->flash->danger('Связка логин/пароль не найдена!');
+                } else {
                     $new_session = Text::base62SafeGenerate(32);
 
-                    if ($incomer->setSession($new_session)->update())
-                    {
-                        return $this->response
-                            ->setCookie('SessionId', $new_session)
-                            ->redirect('/');
+                    if ($incomer->setSession($new_session)->update()) {
+
+                        $this->session->userId = $incomer->id;
+
+                        return $this->response->redirect('/');
                     }
                 }
             }
@@ -54,6 +49,7 @@ class UserController extends BaseController
 
     public function logoutAction()
     {
-        $this->response->setCookie('SessionId', '')->redirect('/');
+        unset($this->session->userId);
+        return $this->response->redirect('/');
     }
 }

@@ -8,9 +8,12 @@ class View
 {
     public function __construct(
         public string $path
-    ) {}
+    )
+    {
+    }
 
-    public function render(string $file, array $vars = []):void {
+    public function render(string $file, array $vars = []): void
+    {
         $file = strtr($file, '/', DIRECTORY_SEPARATOR);
         $file = ucwords($file, DIRECTORY_SEPARATOR);
 

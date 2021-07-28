@@ -20,7 +20,8 @@ class Pagination implements \Iterator
     public int $pos = 0;
     public array $rows = [];
 
-    public function __construct(string $class, string $where = '', array $order = [], ?int $page = null, ?int $limit = null, string $param_page = 'page', string $param_limit = 'limit') {
+    public function __construct(string $class, string $where = '', array $order = [], ?int $page = null, ?int $limit = null, string $param_page = 'page', string $param_limit = 'limit')
+    {
         $this->class = $class;
         $this->where = $where;
         $this->order = $order;
@@ -42,31 +43,13 @@ class Pagination implements \Iterator
         );
     }
 
-    public function getUrlPage(int $page):string {
+    public function getUrlPage(int $page): string
+    {
         return $this->rewriteUrlParam($this->param_page, $page);
     }
 
-    public function getUrlFirstPage():string {
-        return $this->rewriteUrlParam($this->param_page, 1);
-    }
-
-    public function getUrlLastPage():string {
-        return $this->rewriteUrlParam($this->param_page, $this->pages);
-    }
-
-    public function getUrlPrevPage():string {
-        return $this->rewriteUrlParam($this->param_page, max(1, $this->page - 1));
-    }
-
-    public function getUrlNextPage():string {
-        return $this->rewriteUrlParam($this->param_page, min($this->page + 1, $this->pages));
-    }
-
-    public function getUrlLimit(int $limit):string {
-        return $this->rewriteUrlParam($this->param_limit, $limit);
-    }
-
-    public function rewriteUrlParam(string $param, string $value):string {
+    public function rewriteUrlParam(string $param, string $value): string
+    {
 
         if (str_contains($url = $_SERVER['REQUEST_URI'], $param)) {
 
@@ -75,6 +58,31 @@ class Pagination implements \Iterator
 
             return $url . (str_contains($url, '?') ? '&' : '?') . "{$param}={$value}";
         }
+    }
+
+    public function getUrlFirstPage(): string
+    {
+        return $this->rewriteUrlParam($this->param_page, 1);
+    }
+
+    public function getUrlLastPage(): string
+    {
+        return $this->rewriteUrlParam($this->param_page, $this->pages);
+    }
+
+    public function getUrlPrevPage(): string
+    {
+        return $this->rewriteUrlParam($this->param_page, max(1, $this->page - 1));
+    }
+
+    public function getUrlNextPage(): string
+    {
+        return $this->rewriteUrlParam($this->param_page, min($this->page + 1, $this->pages));
+    }
+
+    public function getUrlLimit(int $limit): string
+    {
+        return $this->rewriteUrlParam($this->param_limit, $limit);
     }
 
     public function current()

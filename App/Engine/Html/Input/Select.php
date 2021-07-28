@@ -15,8 +15,7 @@ class Select extends AbstractInput
 
     public function __construct(array $attributes = [])
     {
-        if (isset($attributes['options']))
-        {
+        if (isset($attributes['options'])) {
             $this->options = $attributes['options'];
             unset($attributes['options']);
         }
@@ -47,7 +46,8 @@ class Select extends AbstractInput
 
     public function setValue(mixed $value): static
     {
-        $this->value = is_scalar($value) ? $value : strval($value); return $this;
+        $this->value = is_scalar($value) ? $value : strval($value);
+        return $this;
     }
 
     public function render(array $attributes = []): static
@@ -55,8 +55,7 @@ class Select extends AbstractInput
         $content = '';
 
         foreach ($this->options as $value => $name) {
-            if ($this->value == $value)
-            {
+            if ($this->value == $value) {
                 $format = '<option value="%s" selected>%s</option>';
             } else {
                 $format = '<option value="%s">%s</option>';

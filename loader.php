@@ -15,5 +15,13 @@
             $app->config->database->database,
             $app->config->database->charset
         );
+    },
+
+    'session' => function($app) {
+        return new \App\Engine\Session('SESSID');
+    },
+
+    'flash' => function($app) {
+        return new \App\Engine\Flash($app->session);
     }
 ];

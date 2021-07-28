@@ -16,7 +16,8 @@ class Textarea extends Text
         $value = trim($value);
         $value = htmlentities($value, ENT_QUOTES, double_encode: false);
 
-        $this->content = $value; return $this;
+        $this->content = $value;
+        return $this;
     }
 
     public function getValue(): ?string
