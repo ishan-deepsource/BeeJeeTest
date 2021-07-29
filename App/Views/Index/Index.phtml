@@ -3,7 +3,7 @@
         <h1 class="h2 mb-3">Список задач</h1>
     </div>
     <div class="mb-3">
-        <a class="btn btn-primary <?php if (!$this->user) echo 'disabled'; ?>" href="/compose/">Создать задачу</a>
+        <a class="btn btn-primary" href="/compose/">Создать задачу</a>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
                 <?php if ($task->status === 0): ?><span class="badge bg-danger">Не выполнено</span><?php else: ?><span
                         class="badge bg-success">Выполнено</span><?php endif; ?>
                 <?php if ($task->date_creating !== $task->date_updating): ?><span
-                        class="text-muted">Отредактировано</span><?php endif; ?>
+                        class="text-muted">Ред. админом</span><?php endif; ?>
             </td>
             <td><?=$task->name;?></td>
             <td><?=$task->email;?></td>

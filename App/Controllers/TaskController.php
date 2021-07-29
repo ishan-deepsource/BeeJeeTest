@@ -11,7 +11,9 @@ class TaskController extends BaseController
 {
     public function composeAction($id)
     {
-        if (!$this->user) {
+        if (!empty($id) and !$this->user) {
+            $this->flash->danger('Редактировать задачу может только администратор!');
+
             return $this->response->redirect('/');
         }
 
@@ -29,6 +31,11 @@ class TaskController extends BaseController
                     ->setEmail($composeForm->get('email'))
                     ->setContent($composeForm->get('content'));
 
+                if (!isset($this->user))
+                {
+                    $task->setStatus(0);
+                }
+
                 if ($task->save()) {
                     $this->flash->success('Задача успешно сохранена!');
                     return $this->response->redirect('/');
@@ -36,7 +43,7 @@ class TaskController extends BaseController
             }
         }
 
-
+        $this->view->task = $task;
         $this->view->form = $composeForm;
         $this->view->render('Index');
     }

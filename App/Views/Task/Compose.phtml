@@ -1,8 +1,12 @@
 <form method="POST" class="bg-light rounded mx-auto p-3" style="width: 640px;">
-    <div class="mb-4">
-        <label class="form-label">Статус задачи:</label>
-        <?php $this->render('Partial/Select', ['form' => $this->form, 'name' => 'status']); ?>
-    </div>
+    <?php if(isset($this->user)): ?>
+        <div class="mb-4">
+            <label class="form-label">Статус задачи:</label>
+            <?php $this->render('Partial/Select', ['form' => $this->form, 'name' => 'status']); ?>
+        </div>
+    <?php else: ?>
+        <input type="hidden" name="status" value="0" />
+    <?php endif; ?>
 
     <div class="mb-4">
         <label class="form-label">Введите имя:</label>
